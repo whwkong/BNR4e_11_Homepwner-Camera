@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *serialNumberField;
 @property (weak, nonatomic) IBOutlet UITextField *valueField;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @end
 
@@ -27,12 +29,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (void)setItem:(BNRItem *)item
-{
-    _item = item;
-    self.navigationItem.title = _item.itemName;
 }
 
 - (void)viewDidLoad
@@ -77,6 +73,43 @@
     item.serialNumber = self.serialNumberField.text;
     item.valueInDollars = [self.valueField.text intValue];
     
+}
+
+// override the default setter
+- (void)setItem:(BNRItem *)item
+{
+    _item = item;
+    self.navigationItem.title = _item.itemName;
+}
+
+// handler for camera button
+- (IBAction)takePicture:(id)sender
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
+    
+    // if device has a camera, take a pictre, otherwise, pick from photo library
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    } else {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    imagePicker.delegate = self;
+    // place image picker on screen
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker
+    didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    // get picked image from dictionary
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    
+    // put that image onto screen in our image view
+    self.imageView.image = image;
+    
+    // take image picker off screen
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
