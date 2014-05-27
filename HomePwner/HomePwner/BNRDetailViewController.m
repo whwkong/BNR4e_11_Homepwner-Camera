@@ -123,5 +123,20 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+// called when 'return' key pressed. 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+// called whenever user taps the background
+- (IBAction)backgroundTapped:(id)sender
+{
+    // use to make the view or any subview that is the first responder resign
+    [self.view endEditing:YES];
+}
+
+
 
 @end
