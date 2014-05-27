@@ -15,7 +15,7 @@
 
 @implementation BNRImageStore
 
-
+#pragma mark - Singleton factory
 + (instancetype)sharedStore
 {
     static BNRImageStore *imageStore = nil;
@@ -28,6 +28,7 @@
     return imageStore;
 }
 
+#pragma mark - Store life cycle
 // Prevent public usage of init
 - (instancetype)init
 {
@@ -49,7 +50,7 @@
     return self;
 }
 
-
+#pragma mark - Store getter/setters
 // add image
 - (void)setImage:(UIImage*)image forKey:(NSString*)key
 {

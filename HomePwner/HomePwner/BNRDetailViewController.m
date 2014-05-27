@@ -23,6 +23,7 @@
 @implementation BNRDetailViewController
 
 
+#pragma mark - Controller life cycle
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,6 +33,7 @@
     return self;
 }
 
+#pragma mark - View life cycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -81,6 +83,7 @@
     
 }
 
+#pragma mark - Property setter/getters
 // override the default setter
 - (void)setItem:(BNRItem *)item
 {
@@ -88,6 +91,7 @@
     self.navigationItem.title = _item.itemName;
 }
 
+#pragma mark - Actions
 // handler for camera button
 - (IBAction)takePicture:(id)sender
 {
@@ -105,6 +109,14 @@
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
+// called whenever user taps the background
+- (IBAction)backgroundTapped:(id)sender
+{
+    // use to make the view or any subview that is the first responder resign
+    [self.view endEditing:YES];
+}
+
+#pragma mark - ImagePickerController delegate
 // handler for finish picking media event
 - (void)imagePickerController:(UIImagePickerController *)picker
     didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -123,18 +135,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - TextField delegate
 // called when 'return' key pressed. 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
-}
-
-// called whenever user taps the background
-- (IBAction)backgroundTapped:(id)sender
-{
-    // use to make the view or any subview that is the first responder resign
-    [self.view endEditing:YES];
 }
 
 

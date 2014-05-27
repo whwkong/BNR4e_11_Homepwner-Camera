@@ -20,6 +20,7 @@
 
 @implementation BNRItemStore
 
+#pragma mark - Singleton factory
 + (instancetype)sharedStore
 {
     static BNRItemStore *sharedStore = nil;
@@ -32,6 +33,7 @@
     return sharedStore;
 }
 
+#pragma mark - Class life cycle
 - (instancetype)init
 {
     @throw [NSException exceptionWithName:@"Singleton"
@@ -50,6 +52,7 @@
     return self;
 }
 
+#pragma mark - Store methods
 -(NSArray*) allItems
 {
     return self.privateItems;

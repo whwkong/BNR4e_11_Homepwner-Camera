@@ -21,6 +21,7 @@
 
 @implementation BNRItemsViewController
 
+#pragma mark - Controller life cycle
 - (instancetype)init
 {
     // call the superclass' designated initializer
@@ -48,6 +49,7 @@
     return [self init];
 }
 
+#pragma mark - View life cycle
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -59,7 +61,15 @@
     [self.tableView setTableHeaderView:header];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
+    
+}
 
+#pragma mark - Actions
 - (IBAction)addNewItem:(id)sender
 {
     // Create new BNRItem and add it to store
@@ -75,6 +85,7 @@
                           withRowAnimation:UITableViewRowAnimationTop];
 }
 
+#pragma mark - TableViewDataSource delegates
 // implementation required UITableViewDataSource method
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -100,6 +111,7 @@
     return cell;
 }
 
+#pragma mark - TableView delegates
 // tableView handler for deleting or inserting rows.
 -(void)tableView:(UITableView *)tableView
     commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
@@ -144,14 +156,5 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
                                          animated:YES];
     
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-   
-    [self.tableView reloadData];
-    
-}
-
 
 @end

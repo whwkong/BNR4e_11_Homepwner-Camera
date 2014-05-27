@@ -10,6 +10,7 @@
 
 @implementation BNRItem
 
+#pragma mark Class methods
 + (instancetype)randomItem
 {
     // Create an immutable array of three adjectives
@@ -48,6 +49,7 @@
     return newItem;
 }
 
+#pragma mark - Item life cycle
 - (instancetype)initWithItemName:(NSString *)name
                   valueInDollars:(int)value
                     serialNumber:(NSString *)sNumber
@@ -92,6 +94,7 @@
     NSLog(@"Destroyed: %@", self);
 }
 
+#pragma mark
 - (NSString *)description
 {
     NSString *descriptionString =
