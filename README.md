@@ -6,6 +6,10 @@ Ch11 Camera
 Homepwner app 
 This chapter covers :
 - using UIImageView, UIToolBar
-- Taking pictures; UIImagePickerController
+- Taking pictures with the Camera; UIImagePickerController
+- creating a seperate image store for storing images (BNRImageStore)
+- items now have an associated image
+
+
 
 

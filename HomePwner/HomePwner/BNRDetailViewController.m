@@ -8,6 +8,7 @@
 
 #import "BNRDetailViewController.h"
 #import "BNRItem.h"
+#import "BNRImageStore.h"
 
 @interface BNRDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameField;
@@ -56,6 +57,11 @@
         dateFormatter.timeStyle = NSDateFormatterNoStyle;
     }
     
+    // If there's an image key, then display it on screen
+    NSString *key = item.itemKey;
+    UIImage *img = [[BNRImageStore sharedStore] imageForKey:key];
+    self.imageView.image = img;
+    
     // Use filtered NSDate object to set dateLabel contents
     self.dateLabel.text = [dateFormatter stringFromDate:item.dateCreated];
 }
@@ -99,16 +105,21 @@
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
+// handler for finish picking media event
 - (void)imagePickerController:(UIImagePickerController *)picker
     didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     // get picked image from dictionary
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     
+    // store image in the BNRImageStore for this key
+    [[BNRImageStore sharedStore] setImage:image
+                                   forKey:self.item.itemKey];
+    
     // put that image onto screen in our image view
     self.imageView.image = image;
     
-    // take image picker off screen
+    // take image picker off screen; client is responsible for dismissing controller
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
